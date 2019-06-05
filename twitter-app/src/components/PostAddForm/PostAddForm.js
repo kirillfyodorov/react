@@ -7,10 +7,22 @@ export default class PostAddForm extends React.Component {
     constructor(props) {
         super(props);
 
-        this.onAdd = (e, text = 'hello') => {
-            e.preventDefault();
+        this.state = {
+            text: ''
+        };
 
-            this.props.onAdd(text);
+        this.onAdd = (e) => {
+            e.preventDefault();
+            const {text} = this.state;
+            if (text) {
+                this.props.onAdd(text);
+                this.setState({text: ''});
+            }
+            
+        }
+
+        this.onChange = (e) => {
+            this.setState({text: e.target.value})
         }
     }
 
@@ -22,7 +34,9 @@ export default class PostAddForm extends React.Component {
                 <Input
                     type="text"
                     placeholder="О чем вы думаете сейчас?"
-                    className="new-post-label" />
+                    className="new-post-label"
+                    onChange={this.onChange} 
+                    value={this.state.text} />
                 <Button
                         outline
                         type="submit"

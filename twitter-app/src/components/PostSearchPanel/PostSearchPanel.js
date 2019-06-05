@@ -8,13 +8,30 @@ const SearchInput = styled.input`
     margin-right: 3px;
 `;
 
-const PostSearchPanel = () => {
-    return (
-        <SearchInput
-            className="form-control search-input" 
-            type="text"
-            placeholder="Поиск по запясям" />
-    )
-}
+export default class PostSearchPanel extends React.Component {
+    constructor() {
+        super();
 
-export default PostSearchPanel;
+        this.state = {
+            term: ''
+        }
+
+        this.onChange = (e) => {
+            const term = e.target.value;
+            this.setState({
+                term
+            });
+            this.props.onUpdSearch(term);
+        };
+    }
+    render() {
+        return (
+            <input
+                className="form-control search-input" 
+                type="text"
+                placeholder="Поиск по запясям"
+                onChange={this.onChange} />
+        )
+    }
+    
+}
