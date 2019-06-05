@@ -1,19 +1,36 @@
 import React from 'react';
 import './PostAddForm.css';
+import { Form , Input, Button} from 'reactstrap';
 
-const PostAddForm = () => {
-    return (
-        <form className="bottom-panel d-flex">
-            <input  
-                type="text"
-                placeholder="О чем вы думаете сейчас?"
-                className="form-control new-post-label" />
-            <button
-                    type="submit"
-                    className="btn btn-outline-secondary">
-                    Добавить</button>
-        </form>
-    )
+export default class PostAddForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.onAdd = (e, text = 'hello') => {
+            e.preventDefault();
+
+            this.props.onAdd(text);
+        }
+    }
+
+    render() {
+
+        return (
+            <Form className = "bottom-panel d-flex"
+                    onSubmit={this.onAdd}>
+                <Input
+                    type="text"
+                    placeholder="О чем вы думаете сейчас?"
+                    className="new-post-label" />
+                <Button
+                        outline
+                        type="submit"
+                        color="secondary"
+                        >
+                        Добавить</Button>
+            </Form>
+        )
+    }
+    
 }
-
-export default PostAddForm;

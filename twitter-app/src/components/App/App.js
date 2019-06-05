@@ -7,24 +7,81 @@ import PostAddForm from '../PostAddForm/PostAddForm'
 
 
 import './App.css';
+import styled from 'styled-components';
+import idGenerator from 'react-id-generator';
 
-const App = () => {
+const AppBlock = styled.div`
+    margin: 0 auto;
+    max-width: 800px;
+`
 
-    const data = [123, {label: 'Учу сейчас реакт, крутой фреймворк!', important: true, id: 1},
-                {label: 'Это оказалось не так легко', important: false, id: 2},
-                {label: 'Скоро доделаю первое приложение', important: false, id: 3}]
+export default class  App extends React.Component {
 
-    return (
-        <div>
-            < AppHeader />
-            <div className="search-panel d-flex">
-                < PostSearchPanel />
-                < PostStatusFilter />
-            </div>
-            < PostList posts={data} />
-            < PostAddForm />
-        </div>
-    )
+    constructor (props) {
+        super(props);
+
+        this.createElem = (label, important = false) => {
+            return ({
+                label,
+                important,
+                id: idGenerator()
+            })
+        };
+
+        this.state = {
+            data : [this.createElem('Учу сейчас реакт, крутой фреймворк!'),
+                    this.createElem('Это оказалось не так легко'),
+                    this.createElem('Скоро доделаю первое приложение')]
+        };
+        
+
+        
+
+        this.deleteItem = (id) => {
+            this.setState(({data}) => {
+                const res = data.filter((elem) => {
+                    return (elem.id !== id)
+                });
+                return ({data: res})
+            });
+        }
+
+        this.editPost = (text, id) => {
+             this.setState(({data}) => {
+                const res = data.map((elem) => {
+                    return ((id === elem.id) ? {...elem, label: text} : elem);
+                });
+                return ({data: res})
+            });
+        }
+
+        this.addItem = (text) => {
+            const newItem = this.createElem(text);
+            this.setState(({data}) => {
+                return (
+                    {data: [...data, newItem]}
+                )
+            })
+        }
+    }
+
+    render () {
+        const {data} = this.state;
+        return (
+            <AppBlock>
+                < AppHeader />
+                <div className="search-panel d-flex">
+                    < PostSearchPanel />
+                    < PostStatusFilter />
+                </div>
+                < PostList 
+                    posts={data} 
+                    onDelete={this.deleteItem}
+                    onEdit = {this.editPost} / >
+                < PostAddForm 
+                    onAdd={this.addItem}/>
+            </AppBlock>
+        )
+    }
+    
 }
-
-export default App;
