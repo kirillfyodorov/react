@@ -24,7 +24,7 @@ function calcCash({
     return total;
 }
 
-const {cash : cash} = sponsors;
+const {cash} = sponsors;
 
 const money = calcCash({
     own: null, 
