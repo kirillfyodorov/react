@@ -1,13 +1,34 @@
 import React from 'react';
-import {Col, Row, Container} from 'reactstrap';
+import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ItemList from '../itemList';
 import CharDetails from '../charDetails';
 
 
-const App = () => {
-    return (
+
+export default class App extends React.Component {
+
+    constructor () {
+        super();
+
+        this.state = {
+            showRandom: true
+        }
+
+        this.onBtnClick = () => {
+            this.setState(({showRandom}) => {
+                return {showRandom: !showRandom};
+            });
+        }
+
+    }
+
+    render() {
+        const {showRandom} = this.state;
+        const btnContent = showRandom ? 'Hide random character' : 'Show random character';
+        const randomContent = showRandom ? <RandomChar/> : null;
+        return (
         <> 
             <Container>
                 <Header />
@@ -15,7 +36,8 @@ const App = () => {
             <Container>
                 <Row>
                     <Col lg={{size: 5, offset: 0}}>
-                        <RandomChar/>
+                        <Button  color="secondary hide-btn" onClick={this.onBtnClick}>{btnContent}</Button>
+                        {randomContent}
                     </Col>
                 </Row>
                 <Row>
@@ -29,6 +51,6 @@ const App = () => {
             </Container>
         </>
     );
+    }
+    
 };
-
-export default App;
