@@ -2,8 +2,8 @@ import React from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import CharacterPage from '../characterPage/characterPage';
+import Error from '../error/error';
 
 
 
@@ -13,7 +13,12 @@ export default class App extends React.Component {
         super();
 
         this.state = {
-            showRandom: true
+            showRandom: true,
+            error: false
+        }
+
+        this.componentDidCatch = () => {
+            this.setState({error: true})
         }
 
         this.onBtnClick = () => {
@@ -22,10 +27,15 @@ export default class App extends React.Component {
             });
         }
 
+        
+
     }
 
     render() {
-        const {showRandom} = this.state;
+        const {showRandom, error} = this.state;
+        if (error) {
+            return <Error />
+        }
         const btnContent = showRandom ? 'Hide random character' : 'Show random character';
         const randomContent = showRandom ? <RandomChar/> : null;
         return (
@@ -40,14 +50,7 @@ export default class App extends React.Component {
                         {randomContent}
                     </Col>
                 </Row>
-                <Row>
-                    <Col md='6'>
-                        <ItemList />
-                    </Col>
-                    <Col md='6'>
-                        <CharDetails />
-                    </Col>
-                </Row>
+                < CharacterPage />
             </Container>
         </>
     );

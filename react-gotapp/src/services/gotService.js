@@ -13,27 +13,42 @@ export default class GotService {
 
         this.getAllCharacters = async () => {
             const res = await this.getResource(`/characters?page=5&pageSize=10`);
-            return res.map(this._transformChar);
+            return res.map((item) => {
+                return {
+                    ...this._transformChar(item),
+                    id: +item.url.slice(item.url.lastIndexOf('/') + 1, item.url.length)
+                }
+            });
         }
         this.getCharacter = async (id) => {
             const res = await this.getResource(`/characters/${id}`);
-            return this._transformChar(res);
+            return {...this._transformChar(res), id};
         }
         this.getAllHouses = async () => {
             const res = await this.getResource(`/houses/`);
-            return res.map(this._transformHous);
+            return res.map((item) => {
+                return {
+                    ...this._transformHous(item),
+                    id: +item.url.slice(item.url.lastIndexOf('/') + 1, item.url.length)
+                }
+            });
         }
         this.getHouse = async (id) => {
             const res = await this.getResource(`/houses/${id}`);
-            return this._transformHouse(res);
+            return {...this._transformHous(res), id};
         }
         this.getAllBooks = async () => {
             const res = await this.getResource(`/books/`);
-            return res.map(this._transformBook);
+            return res.map((item) => {
+                return {
+                    ...this._transformBook(item),
+                    id: +item.url.slice(item.url.lastIndexOf('/') + 1, item.url.length)
+                }
+            });
         }
         this.getBook = async (id) => {
             const res = await this.getResource(`/books/${id}`);
-            return this._transformBook(res);
+            return {...this._transformBook(res), id};
         }
         this._unknownTr = (elem) => {
             if (elem) {
