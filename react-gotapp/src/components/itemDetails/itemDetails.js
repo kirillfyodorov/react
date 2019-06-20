@@ -75,7 +75,6 @@ export default class ItemDetails extends Component {
     render() {
         const {selectedItem, onload, error} = this.state;
         const {label} = this.props;
-        console.log(selectedItem);
 
         if (error) {
             return <Error />

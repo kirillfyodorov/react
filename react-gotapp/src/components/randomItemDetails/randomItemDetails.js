@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {ListGroupItem} from 'reactstrap';
+import {ListGroupItem, ListGroup} from 'reactstrap';
 import Spinner from '../spinner/spinner';
 import Error from '../error/error';
 
@@ -43,10 +43,10 @@ export default class RandomItemDetails extends Component {
         }
 
         this.onItemLoaded = (item) => {
-            this.setState({item, loading: false})
+            this.setState({item, loading: false});
         }
 
-        this.onError = (err) => {
+        this.onError = () => {
             this.setState({
                 error: true,
                 loading: false
@@ -55,8 +55,9 @@ export default class RandomItemDetails extends Component {
 
         this.updateItem = () => {
             const id = Math.floor(Math.random() * 140 + 25);
-            this.props.getData(id)
-                .then(this.onItemLoaded)
+            const {getData} = this.props;
+            getData(id)
+                .then((item) => this.onItemLoaded(item))
                 .catch(this.onError);
         }
         
@@ -73,20 +74,22 @@ export default class RandomItemDetails extends Component {
 
     render() {
         const {item, loading, error} = this.state;
-        console.log(item);
         if (error) {
             return <Error/>
         } else if (loading) {
             return <Spinner/>
         }
-
         return (
             <>
+                <Title field='name' label='character' item={item} />
+                <ListGroup className="list-group-flush">
                 {
+                    
                     React.Children.map(this.props.children, (child) => {
                         return React.cloneElement(child, {item})
                     })
                 }
+                </ListGroup>
             </>
         )
         

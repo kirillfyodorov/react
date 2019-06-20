@@ -39,16 +39,13 @@ export default class RandomChar extends Component {
         return (
             <RandomBlock>
                 <RandomItemDetails getData={this.GotService.getCharacter}>
-                <Title field='name' label='character'/>
-                <ListGroup className="list-group-flush">
-                    
-                        <Field field='gender' label='Gender' />
-                        <Field field='born' label='Born' />
-                        <Field field='died' label='Died' />
-                        <Field field='culture' label='Culture' />
-                    
-                </ListGroup>
-            </RandomItemDetails>
+                       
+                    <Field field='gender' label='Gender' />
+                    <Field field='born' label='Born' />
+                    <Field field='died' label='Died' />
+                    <Field field='culture' label='Culture' />
+
+                </RandomItemDetails>
             </RandomBlock>
         );
     }
