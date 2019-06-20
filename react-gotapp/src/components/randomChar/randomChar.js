@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {ListGroup} from 'reactstrap';
 import GotService from '../../services/gotService';
 import RandomItemDetails, {Field, Title} from '../randomItemDetails/randomItemDetails';
-import Error from '../../error/error';
+import Error from '../error/error';
 
 
 const RandomBlock = styled.div`
