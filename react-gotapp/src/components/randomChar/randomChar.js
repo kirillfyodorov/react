@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {ListGroup} from 'reactstrap';
 import GotService from '../../services/gotService';
 import RandomItemDetails, {Field, Title} from '../randomItemDetails/randomItemDetails';
+import Error from '../../error/error';
+
 
 const RandomBlock = styled.div`
     background-color: #fff;
@@ -18,9 +20,22 @@ export default class RandomChar extends Component {
         super();
 
         this.GotService = new GotService();
+
+        this.state = {
+            error: false
+        }
+
+        this.componentDidCatch = () => {
+            this.setState({error: true})
+        }
     }
 
     render() {
+        const {error} = this.state;
+        if (error) {
+            return <Error />
+        }
+
         return (
             <RandomBlock>
                 <RandomItemDetails getData={this.GotService.getCharacter}>
