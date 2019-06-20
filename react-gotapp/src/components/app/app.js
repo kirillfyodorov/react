@@ -2,7 +2,9 @@ import React from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import CharacterPage from '../characterPage/characterPage';
+import CharacterPage from '../pages/characterPage/characterPage';
+import BooksPage from '../pages/BooksPage/booksPage';
+import HousesPage from '../pages/housesPage/housesPage';
 import Error from '../error/error';
 
 
@@ -37,7 +39,7 @@ export default class App extends React.Component {
             return <Error />
         }
         const btnContent = showRandom ? 'Hide random character' : 'Show random character';
-        const randomContent = showRandom ? <RandomChar/> : null;
+        const randomContent = showRandom ? <RandomChar /> : null;
         return (
         <> 
             <Container>
@@ -50,7 +52,7 @@ export default class App extends React.Component {
                         {randomContent}
                     </Col>
                 </Row>
-                < CharacterPage />
+                < CharacterPage / >
             </Container>
         </>
     );
